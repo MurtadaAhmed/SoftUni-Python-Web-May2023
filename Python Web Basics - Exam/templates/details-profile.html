@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=\, initial-scale=1.0"/>
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}"/>
+    <title>Fruitipedia</title>
+</head>
+<body>
+<div id="wrapper">
+    <header>
+        <!-- Navigation -->
+        <a id="logo" href="{% url 'index' %}">
+            <img id="logo-img" src="{% static 'images/logo.png' %}" alt="logo"/>
+        </a>
+
+        <nav>
+            {% if profile %}
+            <!-- If there is a user profile -->
+            <div class="user">
+                <a href="{% url 'dashboard' %}">Dashboard</a>
+                <a href="{% url 'create_fruit' %}">Add Fruit</a>
+                <a href="{% url 'profile_details' %}">Profile</a>
+            </div>
+            {% else %}
+            <!-- If user profile has NOT been created -->
+            <div class="guest">
+
+                <a href="{% url 'create_profile' %}">Create Profile</a>
+
+            </div>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- Profile Details Section -->
+
+        <section id="details">
+            <div id="details-wrapper">
+                <h2>Profile Details</h2>
+                <!-- if the user has a profile image -->
+                {% if profile.image %}
+                <img id="details-img" src="{{ profile.image }}"
+                     alt="profile img"/>
+                {% else %}
+                <!-- if the user has NO profile image -->
+                <img id="details-img" src="{% static 'images/default.jpg' %}" alt="profile img"/>
+                {% endif %}
+                <!-- user's full name -->
+                <p id="details-title">{{ profile.first_name}} {{ profile.last_name }}</p>
+
+                <div id="info-wrapper">
+                    <div id="details-description">
+                        <!-- email -->
+                        <p>
+                            {{ profile.email }}
+                        </p>
+                        <!-- age -->
+                        <p>
+                            {{ profile.age }}
+                        </p>
+                        <!-- number of posts -->
+                        <p id="nutrition">Posts: {{ fruitscount }}</p>
+
+                    </div>
+
+                    <!--Edit and Delete buttons -->
+                    <div id="action-buttons">
+                        <a href="{% url 'profile_edit' %}" id="edit-btn">Edit</a>
+                        <a href="{% url 'profile_delete' %}" id="delete-btn">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+</div>
+<!-- footer -->
+<footer>
+    <p>@Fruitipedia - SoftUni Team 2023. All rights reserved.</p>
+</footer>
+</body>
+</html>
